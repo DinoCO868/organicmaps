@@ -165,3 +165,5 @@ jobs:
           path: android/app/build/outputs/apk/**/OrganicMaps-*.apk
           if-no-files-found: error
           retention-days: 30
+
+# AeroGuard build trigger 2026-08-31
