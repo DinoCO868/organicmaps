@@ -88,7 +88,15 @@ ext.registerCheckApkPermissionsTasks = { Project project, List<String> allowedPe
 
       task.apkDirectory.set(apkArtifact)
       task.allowedPermissions = project.objects.listProperty(Pattern).value(
-          allowedPermissions.collect { it instanceof Pattern ? it : Pattern.compile(it) }
+          allowedPermissions.collect { permission ->
+            if (permission instanceof Pattern) {
+              def regex = permission.pattern()
+              if (project.rootProject.ext.has('appId') && project.rootProject.ext.appId != 'app.organicmaps')
+                regex = regex.replace('app\\.organicmaps', Pattern.quote(project.rootProject.ext.appId))
+              return Pattern.compile(regex)
+            }
+            return Pattern.compile(permission)
+          }
       )
       task.aapt2Executable = project.androidComponents.sdkComponents.aapt2.get().executable.getAsFile()
     }
