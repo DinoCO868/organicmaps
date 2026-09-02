@@ -9,6 +9,7 @@
     android:title="@string/profile"
     tools:summary="LongLongUsernameHere"
     app:singleLineTitle="false"
+    app:isPreferenceVisible="false"
     android:order="1" />
   <androidx.preference.PreferenceCategory
     android:key="@string/pref_settings_general"

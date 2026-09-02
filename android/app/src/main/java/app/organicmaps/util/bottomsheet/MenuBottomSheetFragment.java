@@ -15,6 +15,7 @@ import androidx.core.view.WindowInsetsControllerCompat;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import app.organicmaps.AeroGuardPolicy;
 import app.organicmaps.R;
 import app.organicmaps.util.ThemeUtils;
 import app.organicmaps.util.UiUtils;
@@ -163,6 +164,20 @@ public class MenuBottomSheetFragment extends BottomSheetDialogFragment
           mHeaderFragment = bottomSheetInterfaceWithHeader.getMenuBottomSheetFragment(id);
         }
       }
+    }
+
+    applyAeroGuardPolicy();
+  }
+
+  private void applyAeroGuardPolicy()
+  {
+    if (AeroGuardPolicy.OSM_EDITING_ENABLED || mMenuBottomSheetItems == null)
+      return;
+
+    for (int i = mMenuBottomSheetItems.size() - 1; i >= 0; --i)
+    {
+      if (mMenuBottomSheetItems.get(i).titleRes == R.string.placepage_add_place_button)
+        mMenuBottomSheetItems.remove(i);
     }
   }
 
