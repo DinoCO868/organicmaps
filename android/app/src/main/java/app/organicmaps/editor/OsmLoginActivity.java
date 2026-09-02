@@ -4,12 +4,25 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import app.organicmaps.AeroGuardPolicy;
 import app.organicmaps.base.BaseMwmFragmentActivity;
 
 public class OsmLoginActivity extends BaseMwmFragmentActivity
 {
   public static final String EXTRA_OAUTH2CODE = "oauth2code";
+
+  @Override
+  protected void onSafeCreate(@Nullable Bundle savedInstanceState)
+  {
+    if (!AeroGuardPolicy.OSM_EDITING_ENABLED)
+    {
+      finish();
+      return;
+    }
+    super.onSafeCreate(savedInstanceState);
+  }
 
   @Override
   protected Class<? extends Fragment> getFragmentClass()
@@ -19,6 +32,9 @@ public class OsmLoginActivity extends BaseMwmFragmentActivity
 
   public static void OAuth2Callback(@NonNull Activity activity, String oauth2code)
   {
+    if (!AeroGuardPolicy.OSM_EDITING_ENABLED)
+      return;
+
     final Intent i = new Intent(activity, OsmLoginActivity.class);
     Bundle args = new Bundle();
     args.putString(EXTRA_OAUTH2CODE, oauth2code);
