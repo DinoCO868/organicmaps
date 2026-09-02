@@ -44,7 +44,6 @@
       android:key="@string/pref_autodownload"
       android:title="@string/autodownload"
       app:singleLineTitle="false"
-      android:defaultValue="false"
       android:order="4" />
     <SwitchPreferenceCompat
       android:key="@string/pref_show_downloaded_regions"
